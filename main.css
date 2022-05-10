@@ -1,0 +1,10 @@
+@keyframes new-message-added {
+	from { background-color: #A3C3FF; }
+	to { background-color: none;  }
+}
+
+.message-card {
+	width: 600px;
+	animation-name: new-message-added;
+  animation-duration: 4s;
+}
