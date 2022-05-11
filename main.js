@@ -49,6 +49,14 @@ function createWrapper(messageId, parentId = 0) {
 	return wrapper
 }
 
+function scrollTo(messageId) {
+	document.getElementById(messageId).scrollIntoView({
+		behavior: 'auto',
+    block: 'center',
+    inline: 'center'
+	});
+}
+
 function renderNewCard(data) {
 	const messageId = randomId()
 	const cardsWrapper = document.querySelector('.cards-wrapper')
@@ -56,11 +64,7 @@ function renderNewCard(data) {
 
 	cardsWrapper.appendChild(wrapper)
 
-	document.getElementById(messageId).scrollIntoView({
-		behavior: 'auto',
-    block: 'center',
-    inline: 'center'
-	});
+	scrollTo(messageId)
 }
 
 function addCardChild(parentId) {
@@ -70,11 +74,7 @@ function addCardChild(parentId) {
 
 	parentCardWrapper.appendChild(wrapper)
 
-	document.getElementById(messageId).scrollIntoView({
-		behavior: 'auto',
-    block: 'center',
-    inline: 'center'
-	});
+	scrollTo(messageId)
 }
 
 function removeMessage(messageId) {
@@ -82,18 +82,14 @@ function removeMessage(messageId) {
 }
 
 function saveFlow() {
-	let result = []
 	const messageCards = document.querySelectorAll('.message-card')
-
-	messageCards.forEach(card => {
-		result.push({
-			messageId: card.id,
-			parentId: card.dataset.parentId,
-			message: document.querySelector(`#message-${card.id}`).value,
-			placeholder: document.querySelector(`#key-reference-${card.id}`).value,
-			type: document.querySelector(`#type-${card.id}`).value
-		})
-	})
+	const result = [...messageCards].map(card => ({
+		messageId: card.id,
+		parentId: card.dataset.parentId,
+		message: document.querySelector(`#message-${card.id}`).value,
+		placeholder: document.querySelector(`#key-reference-${card.id}`).value,
+		type: document.querySelector(`#type-${card.id}`).value
+	}))
 
 	console.log(result)
 }
